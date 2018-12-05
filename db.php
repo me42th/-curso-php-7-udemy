@@ -4,10 +4,21 @@
    // var_dump($con);
     if($con->connect_error)
         echo $con->connect_error;
-    $stmt = $con->prepare("INSERT INTO transac values(default,?,?,null,null,null,null)");    
-    $stmt->bind_param("si",$desc,$enum);
-    $desc = "texto";
-    $enum = 1;    
-    $stmt->execute();
+    
+    function insert($desc,$enum){         
+        global $con;   
+        $stmt = $con->prepare("INSERT INTO transac values(default,?,?,null,null,null,null)");    
+        $stmt->bind_param("si",$desc,$enum);
+        $stmt->execute();
+    }
+    
 
+    function select($value){
+        global $con;
+        $result = $con->query("SELECT * FROM transac where id = $value");
+        return $result->fetch_array();
+    }
+
+    var_dump(select(1));
 ?>
+
