@@ -19,6 +19,6 @@
         return $result->fetch_array();
     }
 
-    var_dump(select(1));
+
 ?>
 

@@ -1,7 +1,11 @@
 <?php
     echo 'start';
     require_once("config.php");
-    $sql = new Sql();
-    $sql->query('insert into transac');
+    $root = new Usuario();
+ 
+    $root->loadById(1);
+    
+
     echo 'end';
+    
 ?>
