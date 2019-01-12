@@ -31,9 +31,9 @@
         }
         public function loadById($id){
             $sql = new Sql();
-            $result = $sql->query("truncate users");
-            var_dump($result);
-            if(isset($results[0])){
+            $result = $sql->select("select * from users where id = $id");
+            
+            if(isset($result[0])){
                 $row = $result[0];
                 $this->setId($row['id']);
                 $this->setName($row['name']);
