@@ -5,8 +5,8 @@
     //Carrega um usuário
     //$root->loadById(1);
     //echo $root;
-    foreach(Usuario::getList() as $user){
-         print_r($user);echo"<br>";echo"<br>";
+    foreach(Usuario::search('@gmail') as $user){
+        var_dump($user);
     }    
     
 ?>

@@ -61,7 +61,8 @@
         public static function search($login){
 
             $sql = new Sql();
-            return $sql->select("select * from users ");
+            return $sql->select("select * from users where email like :search order by created_at;",
+            array(':search'=>"%".$login."%"));
 
         }
 
@@ -75,7 +76,7 @@
                 $this->setEmail($row['email']);
                 $this->setSex($row['sex']);
                 $this->setDtcadastro(new DateTime($row['created_at']));
-                $this->setDeslogin($row['name']);
+                $this->setDeslogin($row['email']);
                 $this->setDessenha($row['password']);
             }
         }
