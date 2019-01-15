@@ -61,24 +61,64 @@
         public static function search($login){
 
             $sql = new Sql();
-            return $sql->select("select * from users where email like :search order by created_at;",
+            $resultado = $sql->select("select * from users where email like :search order by created_at;",
             array(':search'=>"%".$login."%"));
+            $array;
+            if(count($resultado) > 0)
+                for($cont = 0; $cont < count($resultado);$cont++)
+                {   
+                    $user = new Usuario();
+                    $user->setData($resultado[$cont]);    
+                    $array[$cont] = $user;
+                }
+            else return null;         
+            return $array;
 
         }
 
-        public function loadById($id){
+        public static function insert($user){
+
+            $sql = new Sql();
+           
+            $sql->query("insert into users values(default, null,'".$user->getName()."', '".$user->getEmail()."LAST_INSERT_ID()', null,'".$user->getDessenha()."', null, null, null, null, null);");
+        
+            return $sql->select('select * from users where id = LAST_INSERTED_ID()');
+            
+        }
+
+        public static function update($user){
+            $sql = new Sql();
+            $sql->query("update users set name='".$user->getName()."', email='".$user->getEmail()."' ,password='".$user->getDessenha()."' where id = '".$user->getId()."';");
+       }
+
+        
+
+        public function setData($data){
+                $this->setId($data['id']);
+                $this->setName($data['name']);
+                $this->setEmail($data['email']);
+                $this->setSex($data['sex']);
+                $this->setDtcadastro(new DateTime($data['created_at']));
+                $this->setDeslogin($data['email']);
+                $this->setDessenha($data['password']);
+        }
+
+        public function login($login){
+            $array;
+            if(count($array = $this->search($login)) > 0)
+                $this->setData($array[0]);
+            else
+                throw new Exception("Email não encontrado");    
+        }
+
+        public static function loadById($id){
             $sql = new Sql();
             $result = $sql->select("select * from users where id = $id");            
-            if(isset($result[0])){
-                $row = $result[0];
-                $this->setId($row['id']);
-                $this->setName($row['name']);
-                $this->setEmail($row['email']);
-                $this->setSex($row['sex']);
-                $this->setDtcadastro(new DateTime($row['created_at']));
-                $this->setDeslogin($row['email']);
-                $this->setDessenha($row['password']);
-            }
+            $user = new Usuario();
+            if(isset($result[0]))
+                $user->setData($result[0]);
+            else throw new Exception("Usuario não encontrado");
+            return $user;
         }
         public function __toString(){
             return json_encode(array(

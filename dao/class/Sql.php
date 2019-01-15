@@ -14,7 +14,7 @@ class Sql extends PDO{
         }
     }
     public function query($rawQuery, $params = array()){
-        
+
         $stmt = $this->con->prepare($rawQuery);
         
         $this->setParams($stmt, $params);
