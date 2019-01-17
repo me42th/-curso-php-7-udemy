@@ -5,11 +5,13 @@
     //Carrega um usuário
     //$root->loadById(1);
     //echo $root;
-    //foreach(Usuario::search('@gmail') as $user){
-    //     Usuario::insert($user);        
-    //}
-    $user = Usuario::loadById(1);
-    $user->setEmail($_GET['email']);  
-    Usuario::update($user);  
+    foreach(Usuario::search('@gmail') as $user){
+         Usuario::insert($user);        
+    }
+    //$user = Usuario::loadById(1);
+    //$user->setEmail($_GET['email']);  
+    //Usuario::update($user);  
+    
+    //Usuario::delete(Usuario::loadById($_GET['id']));
     echo 'sucesso';
 ?>

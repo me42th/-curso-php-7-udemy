@@ -56,7 +56,12 @@
         public static function getList(){
             $sql = new Sql();
             return $sql->select("select * from users order by created_at;");
-        }    
+        }
+        
+        public static function delete($user){
+            $sql = new Sql();
+            $sql->query("delete from users where id = ".$user->getID().";");
+        }
 
         public static function search($login){
 
@@ -80,7 +85,7 @@
 
             $sql = new Sql();
            
-            $sql->query("insert into users values(default, null,'".$user->getName()."', '".$user->getEmail()."LAST_INSERT_ID()', null,'".$user->getDessenha()."', null, null, null, null, null);");
+            $sql->query("insert into users values(default, null,'".$user->getName()."', '".$user->getEmail().($sql->select('select id from users order by id desc;')[0]['id']+1)."', null,'".$user->getDessenha()."', null, null, null, null, null);");
         
             return $sql->select('select * from users where id = LAST_INSERTED_ID()');
             
