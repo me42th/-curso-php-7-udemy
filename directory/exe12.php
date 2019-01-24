@@ -1,5 +1,3 @@
-  
-
 <?php
     $cep = $_GET['cep'];
     $link = "https://viacep.com.br/ws/$cep/json/";
