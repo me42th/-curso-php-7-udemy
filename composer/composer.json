@@ -1,0 +1,17 @@
+{
+    "comando": "composer init",
+    "name": "me42th/composer",
+    "description": "Este é um teste",
+    "type": "library",
+    "license": "mit",
+    "authors": [
+        {
+            "name": "David Meth",
+            "email": "david@cabra.io"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "monolog/monolog":"1.0.*"
+    }
+}
