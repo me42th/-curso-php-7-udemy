@@ -1,9 +1,38 @@
-
-
 <?php
 
-    captcha();
+    //defense in depth
+    function hash_login_user_cookie_cript()
+    {
+
+    }
     
+    //xxs
+    function remove_html($boo = true,$allow="")
+    {
+        //remove todas as tags, exceto as enviadas na variavel allow
+        if($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['xxs']))
+            echo $boo?strip_tags($_POST['xxs'],$allow):$_POST['xxs'];
+        echo "<form method='post'>";
+        echo "<input type='text' name='xxs'>";
+        echo "<button type='submit'>XXS</button>";
+        echo "</form>";
+        
+    }
+
+    //xxs
+    function print_html($boo = true)
+    {
+        //imprime o texto html
+        if($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['xxs']))
+            echo $boo?htmlentities($_POST['xxs']):$_POST['xxs'];
+        echo "<form method='post'>";
+        echo "<input type='text' name='xxs'>";
+        echo "<button type='submit'>XXS</button>";
+        echo "</form>";
+        
+    }
+
+
     //no-robots
     function captcha()
     {
