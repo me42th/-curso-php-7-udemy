@@ -1,18 +1,18 @@
 <?php
-
 require_once("vendor/autoload.php");
-use PHPMailer\PHPMailer\PHPMailer;    
+use PHPMailer\PHPMailer\PHPMailer;
+/*
+*This example shows settings to use when sending via Google's Gmail servers.
+*This uses traditional id & password authentication - look at the gmail_xoauth.phps
+*example to see how to use XOAUTH2.
+*The IMAP section shows how to save this message to the 'Sent Mail' folder using IMAP commands.
+*/
 
-/**
- * This example shows settings to use when sending via Google's Gmail servers.
- * This uses traditional id & password authentication - look at the gmail_xoauth.phps
- * example to see how to use XOAUTH2.
- * The IMAP section shows how to save this message to the 'Sent Mail' folder using IMAP commands.
- */
 //Import PHPMailer classes into the global namespace
-
 //Create a new PHPMailer instance
+
 $mail = new PHPMailer;
+
 //Tell PHPMailer to use SMTP
 $mail->isSMTP();
 //Enable SMTP debugging
@@ -34,13 +34,14 @@ $mail->SMTPAuth = true;
 //Username to use for SMTP authentication - use full email address for gmail
 $mail->Username = "me42th@gmail.com";
 //Password to use for SMTP authentication
-$mail->Password = $mail->Password = $mail->Password;
+$mail->Password = $mail->Password;
 //Set who the message is to be sent from
 $mail->setFrom('me42th@gmail.com', 'me42th dev');
 //Set an alternative reply-to address
 $mail->addReplyTo('david.meth@live.com', 'David Meth');
 //Set who the message is to be sent to
 $mail->addAddress('david.meth@hotmail.com', 'David Meth');
+$mail->addAddress('brendacosta23@gmail.com', 'Brenda');
 //Set the subject line
 $mail->Subject = 'Assunto do Email';
 //Read an HTML message body from an external file, convert referenced images to embedded,
@@ -55,11 +56,11 @@ if (!$mail->send()) {
     echo "Mailer Error: " . $mail->ErrorInfo;
 } else {
     echo "Message sent!";
-    //Section 2: IMAP
-    //Uncomment these to save your message in the 'Sent Mail' folder.
-    #if (save_mail($mail)) {
-    #    echo "Message saved!";
-    #}
+//Section 2: IMAP
+//Uncomment these to save your message in the 'Sent Mail' folder.
+#if (save_mail($mail)) {
+#    echo "Message saved!";
+#}
 }
 //Section 2: IMAP
 //IMAP commands requires the PHP IMAP Extension, found at: https://php.net/manual/en/imap.setup.php
@@ -76,5 +77,4 @@ function save_mail($mail)
     imap_close($imapStream);
     return $result;
 }
-
 ?>
