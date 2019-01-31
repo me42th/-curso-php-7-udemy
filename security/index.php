@@ -7,6 +7,7 @@
    }  
   
    //sql injection
+   //teste
    function select_msqli()
     {   
        if(!is_numeric($_GET['id']))
