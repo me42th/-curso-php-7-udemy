@@ -1,9 +1,61 @@
 <?php
 
-    //defense in depth
-    function hash_login_user_cookie_cript()
-    {
 
+    echo ssl_crypt();
+
+    
+
+    //criptografia
+    function ssl_crypt($data = ['nome' => 'David']){
+        
+        define('SECRET_IV', pack('a16','senha'));
+        define('SECRET', pack('a16','senha'));
+        
+        $open_ssl = openssl_encrypt(
+            json_encode($data), //dados que serão encriptados
+            'AES-128-CBC',      //algoritmo
+            SECRET,             //chave    
+            0,                  //...
+            SECRET_IV           //chave II
+        );        
+        return $open_ssl;
+    }
+    
+    function ssl_decrypt($data){
+        define('SECRET_IV', pack('a16','senha'));
+        define('SECRET', pack('a16','senha'));
+
+        $open_ssl = openssl_decrypt(
+            $data, //dados que serão encriptados
+            'AES-128-CBC',      //algoritmo
+            SECRET,             //chave    
+            0,                  //...
+            SECRET_IV           //chave II
+        );        
+        return $open_ssl;
+    }    
+    
+    function m_crypt($data = ['nome' => 'David'])
+    {        
+        define('SECRET', pack('a16','senha')); //converte para uma string com 16 caracteres
+        $mcrypt = base64_encode(mcrypt_encrypt(               
+            MCRYPT_RIJNDAEL_128, // algoritmo de criptografia a ser usado                
+            SECRET,              // chave decrypt  
+            json_encode($data),  // dados encriptados    
+            MCRYPT_MODE_ECB      // modo de criptografia
+        ));
+        return $mcrypt;        
+    }
+
+    function m_decrypt($data){
+        define('SECRET', pack('a16','senha')); //converte para uma string com 16 caracteres
+        $decrypt = mcrypt_decrypt(               
+            MCRYPT_RIJNDAEL_128, // algoritmo de criptografia a ser usado                
+            SECRET,              // chave decrypt  
+            base64_decode($data),// dados encriptados    
+            MCRYPT_MODE_ECB      // modo de criptografia
+        );
+        return $decrypt;        
     }
     
     //xxs
